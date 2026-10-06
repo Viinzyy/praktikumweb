@@ -1,0 +1,318 @@
+/* ==========================================
+   1. RESET & VARIABEL DESAIN (ORANYE MODERN)
+   ========================================== */
+:root {
+  --primary-orange: #ea580c;       /* Warna Oranye Utama */
+  --primary-orange-light: #f97316; /* Oranye Terang */
+  --orange-light-bg: #fff7ed;     /* Latar Belakang Oranye Soft */
+  --dark-slate: #1e293b;           /* Warna Teks Utama */
+  --muted-slate: #64748b;          /* Warna Teks Sekunder */
+  --bg-body: #f8fafc;              /* Latar Belakang Halaman */
+  --bg-card: #ffffff;              /* Latar Belakang Kartu */
+  --border-color: #ffedd5;         /* Border Oranye Halus */
+  --focus-ring: #2563eb;           /* Warna Ring Fokus Keyboard */
+  
+  --radius: 12px;
+  --transition: all 0.25s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--dark-slate);
+  line-height: 1.6;
+  overflow-x: hidden; /* Mencegah gulir horizontal */
+}
+
+/* 6. Aksesibilitas: Skip Link & Fokus Keyboard Terlihat */
+.lewati {
+  position: absolute;
+  top: -60px;
+  left: 12px;
+  background: var(--primary-orange);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+
+.lewati:focus {
+  top: 12px;
+  outline: 3px solid var(--focus-ring);
+}
+
+/* 6. Poin Fokus Keyboard Terlihat pada Seluruh Elemen Interaktif */
+a:focus-visible,
+button:focus-visible,
+[tabindex="-1"]:focus-visible {
+  outline: 3px solid var(--focus-ring) !important;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Pembungkus Utama Halaman */
+.halaman {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: var(--bg-card);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================
+   2 & 4. HEADER (Margin, Padding, Latar Belakang)
+   ========================================== */
+.header {
+  background: linear-gradient(135deg, #c2410c 0%, #ea580c 50%, #f97316 100%);
+  color: #ffffff;
+  padding: 50px 24px;
+  text-align: center;
+}
+
+.header-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 6. Heading Berurutan (h1 -> h2 -> h3) */
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.header p {
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+/* ==========================================
+   2 & 3. NAVIGASI (FLEXBOX)
+   ========================================== */
+.menu {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  border-bottom: 2px solid #f1f5f9;
+  z-index: 50;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--muted-slate);
+  font-weight: 600;
+  padding: 14px 20px;
+  font-size: 0.95rem;
+  transition: var(--transition);
+  border-bottom: 3px solid transparent;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary-orange);
+  border-bottom-color: var(--primary-orange);
+  background-color: var(--orange-light-bg);
+}
+
+/* ==========================================
+   2, 4, 5. MAIN & PANEL
+   ========================================== */
+main {
+  padding: 40px 24px;
+  flex: 1;
+}
+
+.panel {
+  margin-bottom: 44px;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  font-size: 1.5rem;
+  color: var(--dark-slate);
+  font-weight: 700;
+}
+
+.section-title .line {
+  width: 48px;
+  height: 4px;
+  background-color: var(--primary-orange);
+  border-radius: 2px;
+  margin-top: 6px;
+}
+
+.panel > p {
+  color: var(--muted-slate);
+  font-size: 1rem;
+}
+
+/* ==========================================
+   3, 4, 5. KARTU GRID (GRID & FLEXBOX LAYOUT)
+   ========================================== */
+.kartu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Tampilan Desktop: 3 Kolom */
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.kartu {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.kartu:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-orange);
+  box-shadow: 0 12px 24px rgba(234, 88, 12, 0.12);
+}
+
+.kartu-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.sub-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.kartu h3 {
+  font-size: 1.15rem;
+  color: var(--dark-slate);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.kartu p {
+  color: var(--muted-slate);
+  font-size: 0.92rem;
+}
+
+/* ==========================================
+   2 & 4. FOOTER
+   ========================================== */
+.footer {
+  background-color: var(--dark-slate);
+  color: #ffffff;
+  text-align: center;
+  padding: 28px 24px;
+  margin-top: auto;
+  border-top: 4px solid var(--primary-orange);
+}
+
+.footer-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.footer-sub {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+/* ==========================================
+   5 & 6. MEDIA QUERY (RESPONSIF MOBILE <= 768px & 375px)
+   ========================================== */
+@media (max-width: 768px) {
+  .kartu-grid {
+    grid-template-columns: 1fr; /* Ponsel: 1 Kolom Menumpuk Vertikal */
+  }
+
+  .header {
+    padding: 36px 16px;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .header p {
+    font-size: 0.95rem;
+  }
+
+  .menu-container {
+    gap: 4px;
+  }
+
+  .nav-link {
+    padding: 12px 12px;
+    font-size: 0.88rem;
+  }
+
+  main {
+    padding: 28px 16px;
+  }
+}
+
+/* Penyesuaian khusus untuk lebar 375px agar tidak ada gulir horizontal */
+@media (max-width: 375px) {
+  body, .halaman {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .header h1 {
+    font-size: 1.35rem;
+  }
+
+  .nav-link {
+    padding: 10px 8px;
+    font-size: 0.82rem;
+  }
+
+  .kartu {
+    padding: 18px;
+  }
+}
