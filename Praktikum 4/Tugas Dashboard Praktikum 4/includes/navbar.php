@@ -1,3 +1,6 @@
+<?php
+$nav_user_name = isset($_SESSION['nama_lengkap']) && !empty($_SESSION['nama_lengkap']) ? htmlspecialchars($_SESSION['nama_lengkap']) : 'Admin Elektromedis';
+?>
   <!-- ==========================================
        START: Top Navbar Component
        ========================================== -->
@@ -65,7 +68,7 @@
                 <i class="bi bi-shield-check"></i>
               </div>
               <div class="notification-content">
-                <p class="notification-text">Spark Admin v1.0.0 berhasil dimuat.</p>
+                <p class="notification-text">Sesi aktif: <strong><?php echo $nav_user_name; ?></strong></p>
                 <span class="notification-time">1 menit lalu</span>
               </div>
             </a>
@@ -77,18 +80,22 @@
       <div class="dropdown ms-2">
         <button class="navbar-profile-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
           aria-expanded="false" id="profile-dropdown">
-          <img src="assets/images/avatar.png" alt="Admin SIM RS" class="navbar-profile-img">
-          <span class="navbar-profile-name d-none d-md-inline">Admin Elektromedis</span>
+          <img src="assets/images/avatar.png" alt="User Profile" class="navbar-profile-img">
+          <span class="navbar-profile-name d-none d-md-inline"><?php echo $nav_user_name; ?></span>
           <i class="bi bi-chevron-down navbar-profile-caret"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile" aria-labelledby="profile-dropdown">
-          <li class="dropdown-header">Selamat Datang!</li>
-          <li><a class="dropdown-item" href="index.php"><i class="bi bi-house"></i> Dashboard</a></li>
+          <li class="dropdown-header">Login sebagai <strong><?php echo $nav_user_name; ?></strong></li>
+          <li><a class="dropdown-item" href="index.php"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
           <li><a class="dropdown-item" href="add.php"><i class="bi bi-plus-circle"></i> Tambah Data</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item text-danger" href="index.php"><i class="bi bi-box-arrow-right"></i> Keluar</a></li>
+          <li>
+            <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar (logout)?');">
+              <i class="bi bi-box-arrow-right"></i> Keluar (Logout)
+            </a>
+          </li>
         </ul>
       </div>
     </div>

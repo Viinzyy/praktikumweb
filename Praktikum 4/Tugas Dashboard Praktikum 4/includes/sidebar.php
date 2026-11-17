@@ -2,6 +2,9 @@
 if (!isset($current_page)) {
     $current_page = 'dashboard';
 }
+
+$user_display_name = isset($_SESSION['nama_lengkap']) && !empty($_SESSION['nama_lengkap']) ? htmlspecialchars($_SESSION['nama_lengkap']) : 'Admin SIM RS';
+$user_email = isset($_SESSION['email']) && !empty($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : 'admin@rs-elektro.id';
 ?>
   <!-- ==========================================
        START: Sidebar Component
@@ -40,6 +43,20 @@ if (!isset($current_page)) {
         </ul>
       </div>
 
+      <!-- Group: Akun & Sesi -->
+      <div class="sidebar-menu-section">
+        <div class="sidebar-menu-title">Akun & Sesi</div>
+        <ul class="sidebar-menu-list">
+          <li class="sidebar-menu-item">
+            <a href="logout.php" class="sidebar-menu-link text-danger" title="Keluar dari Sistem"
+               onclick="return confirm('Apakah Anda yakin ingin keluar (logout)?');">
+              <i class="bi bi-box-arrow-right text-danger"></i>
+              <span class="text-danger">Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
       <!-- Group: Akademik -->
       <div class="sidebar-menu-section">
         <div class="sidebar-menu-title">Informasi Praktikum</div>
@@ -62,11 +79,11 @@ if (!isset($current_page)) {
 
     <!-- Sidebar Profile Card -->
     <div class="sidebar-profile">
-      <img src="assets/images/avatar.png" alt="Admin Elektromedis" class="sidebar-profile-img"
+      <img src="assets/images/avatar.png" alt="User Avatar" class="sidebar-profile-img"
         onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
       <div class="sidebar-profile-info">
-        <div class="sidebar-profile-name">Admin SIM RS</div>
-        <div class="sidebar-profile-email">admin@rs-elektro.id</div>
+        <div class="sidebar-profile-name"><?php echo $user_display_name; ?></div>
+        <div class="sidebar-profile-email"><?php echo $user_email; ?></div>
       </div>
     </div>
   </div>

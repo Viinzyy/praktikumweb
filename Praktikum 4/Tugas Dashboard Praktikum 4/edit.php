@@ -6,6 +6,7 @@
  */
 
 include_once("config.php");
+include_once("includes/auth_check.php");
 
 $page_title = "Edit Data Alat Elektromedis";
 $current_page = "alat";

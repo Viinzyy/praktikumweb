@@ -6,6 +6,7 @@
  */
 
 include_once("config.php");
+include_once("includes/auth_check.php");
 
 // Ambil id dari parameter URL
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;

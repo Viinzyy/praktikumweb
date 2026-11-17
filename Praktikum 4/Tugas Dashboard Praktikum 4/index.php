@@ -6,6 +6,7 @@
  */
 
 include_once("config.php");
+include_once("includes/auth_check.php");
 
 $page_title = "Dashboard Data Alat Elektromedis";
 $current_page = "dashboard";

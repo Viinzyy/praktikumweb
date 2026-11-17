@@ -1,28 +1,36 @@
 # Tugas Dashboard Praktikum 4 - SIM RS (Sistem Informasi Manajemen Rumah Sakit)
 
-Aplikasi Web Inventaris & Manajemen **Data Alat Elektromedis** berbasis **PHP Native** dan **MySQL**, diintegrasikan dengan Template Admin Modern **Spark Admin v1.0.0 (Bootstrap 5)**.
+Aplikasi Web Inventaris & Manajemen **Data Alat Elektromedis** berbasis **PHP Native** dan **MySQL**, diintegrasikan dengan Template Admin Modern **Spark Admin v1.0.0 (Bootstrap 5)** serta dilengkapi sistem **Autentikasi Pengguna (Login, Registrasi, Logout)**.
 
 ---
 
 ## 📌 Fitur Aplikasi
 
-1. **Dashboard Modern (Spark Admin Theme):**
+1. **Sistem Autentikasi Pengguna (Auth System):**
+   - **Registrasi Akun:** Formulir pendaftaran pengguna baru (Nama Awal, Nama Akhir, Username, Email, Password, Konfirmasi Password) dengan hashing password aman **Bcrypt**.
+   - **Login Pengguna:** Masuk ke sistem menggunakan Email atau Username beserta Password.
+   - **Logout Pengguna:** Menghapus seluruh sesi aman dengan konfirmasi keluar.
+   - **Proteksi Halaman (Middleware):** Seluruh halaman dashboard dan CRUD tidak dapat diakses tanpa login terlebih dahulu.
+   - **Akun Bawaan:** Tersedia akun admin default (`admin` / `admin123`).
+
+2. **Dashboard Modern (Spark Admin Theme):**
    - Kartu statistik ringkasan data real-time:
      - Total unit alat elektromedis.
      - Jumlah pabrikan / merek vendor terdaftar.
      - Jumlah sebaran ruangan / instalasi rumah sakit.
+   - Profil pengguna dinamis di sidebar dan topbar.
    - Status sistem aktif & tanggal otomatis.
 
-2. **Manajemen Data (CRUD Lengkap):**
+3. **Manajemen Data (CRUD Lengkap):**
    - **Create:** Tambah data alat baru dengan form modern, validasi field, dan autocomplete datalist untuk merek & ruangan.
    - **Read:** Tabel data responsif dengan badge status, ID unik, merek, lokasi, dan tahun.
    - **Update:** Edit data alat medis dengan form terisi otomatis.
    - **Delete:** Hapus data alat dengan dialog konfirmasi keamanan (anti keliru hapus).
 
-3. **Pencarian Real-Time (Live Search):**
+4. **Pencarian Real-Time (Live Search):**
    - Kotak pencarian responsif di navbar dan di header tabel untuk memfilter nama alat, merek, maupun lokasi secara instan tanpa perlu reload halaman.
 
-4. **100% Offline Compatible:**
+5. **100% Offline Compatible:**
    - Semua aset CSS, icon (Bootstrap Icons), JavaScript, dan fonts sudah tersimpan lokal di folder `assets/`, sehingga tidak memerlukan koneksi internet saat dijalankan di XAMPP.
 
 ---
@@ -34,19 +42,23 @@ Tugas Dashboard Praktikum 4/
 ├── assets/                  # CSS, JS, Gambar, dan Library (Spark Admin)
 │   ├── css/                 # main.css (desain & styling kustom)
 │   ├── images/              # avatar, ikon, dan logo
-│   ├── js/                  # dashboard.js (logika UI dashboard)
+│   ├── js/                  # dashboard.js & auth.js
 │   └── libs/                # Bootstrap 5, Bootstrap Icons, Flatpickr, Apexcharts
-├── includes/                # Komponen Layout Terpisah (Modular PHP)
+├── includes/                # Komponen Layout & Keamanan
+│   ├── auth_check.php       # Proteksi Sesi Login Pengguna
 │   ├── header.php           # HTML Head & Load CSS/Icons
-│   ├── sidebar.php          # Navigasi Sidebar Responsif
-│   ├── navbar.php           # Top Navbar, Search & Profil
+│   ├── sidebar.php          # Navigasi Sidebar Responsif & Profil User
+│   ├── navbar.php           # Top Navbar, Search & Menu Profil User
 │   └── footer.php           # Footer & Script Live Search
 ├── config.php               # Konfigurasi Koneksi Database MySQL
-├── database.sql             # Skrip SQL untuk Import Database & Dummy Data
-├── index.php                # Halaman Utama Dashboard & Tabel Alat
-├── add.php                  # Halaman Tambah Alat Baru
-├── edit.php                 # Halaman Edit Data Alat
-├── delete.php               # Skrip Pemrosesan Hapus Data
+├── database.sql             # Skrip SQL (Tabel users, tabel alat, & data dummy)
+├── login.php                # Halaman Masuk (Login)
+├── register.php             # Halaman Pendaftaran Akun (Registrasi)
+├── logout.php               # Skrip Pemrosesan Keluar (Logout)
+├── index.php                # Halaman Utama Dashboard & Tabel Alat (Terproteksi)
+├── add.php                  # Halaman Tambah Alat Baru (Terproteksi)
+├── edit.php                 # Halaman Edit Data Alat (Terproteksi)
+├── delete.php               # Skrip Pemrosesan Hapus Data (Terproteksi)
 └── README.md                # Dokumentasi Proyek
 ```
 
@@ -58,23 +70,23 @@ Tugas Dashboard Praktikum 4/
    - Buka **XAMPP Control Panel**.
    - Klik **Start** pada modul **Apache** dan **MySQL**.
 
-2. **Import Database `simrs`:**
-   - Buka browser dan akses [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/).
-   - Buat database baru bernama `simrs` (atau klik menu **Import**).
-   - Pilih file `database.sql` yang berada di dalam folder project ini.
-   - Klik **Go** / **Kirim** untuk mengimpor tabel `alat` beserta sampel data awal.
+2. **Database:**
+   - Database `simrs` sudah memuat tabel `users` dan tabel `alat`.
+   - File cadangan SQL tersedia di [`database.sql`](database.sql) jika ingin diimpor ulang melalui phpMyAdmin.
 
 3. **Buka Aplikasi di Browser:**
-   - Akses URL berikut di browser Anda:
+   - Akses URL login berikut di browser Anda:
      ```
-     http://localhost/praktikum_web/Praktikum 4/Tugas Dashboard Praktikum 4/
+     http://localhost/praktikum_web/Praktikum 4/Tugas Dashboard Praktikum 4/login.php
      ```
+   - **Login dengan Akun Default:**
+     - **Username / Email:** `admin` (atau `admin@rs-elektro.id`)
+     - **Password:** `admin123`
+   - Atau klik **Daftar Akun Baru** untuk membuat akun pribadi Anda!
 
 ---
 
 ## 🛠️ Langkah Melakukan Git Commit & Push ke GitHub
-
-Jika Anda ingin menyimpan dan mengunggah pengerjaan ini ke repository GitHub Anda (`praktikum2web`):
 
 Buka terminal di VS Code (atau PowerShell di folder repository):
 
@@ -82,15 +94,12 @@ Buka terminal di VS Code (atau PowerShell di folder repository):
 # 1. Pindah ke direktori repository utama
 cd "D:\Pemrograman Web\praktikumweb"
 
-# 2. Cek status perubahan file
-git status
-
-# 3. Tambahkan seluruh folder tugas baru
+# 2. Tambahkan perubahan terbaru
 git add "Praktikum 4/Tugas Dashboard Praktikum 4"
 
-# 4. Berikan commit pesan yang rapi
-git commit -m "feat(praktikum4): pasang template spark admin modern untuk dashboard SIM RS"
+# 3. Buat commit
+git commit -m "feat(auth): tambah fitur registrasi, login bcrypt, logout dan proteksi sesi"
 
-# 5. Push ke branch utama GitHub Anda
+# 4. Push ke GitHub
 git push origin main
 ```
