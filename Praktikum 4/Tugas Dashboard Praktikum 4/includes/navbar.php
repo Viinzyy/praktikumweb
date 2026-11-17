@@ -16,12 +16,12 @@ $nav_user_name = isset($_SESSION['nama_lengkap']) && !empty($_SESSION['nama_leng
         <i class="bi bi-list"></i>
       </button>
 
-      <!-- Quick Actions Dropdown -->
+      <!-- Quick Action Button -> Trigger Modal Tambah Alat -->
       <div class="dropdown ms-2">
-        <a href="add.php" class="btn-quick-action text-decoration-none">
+        <button type="button" class="btn-quick-action text-decoration-none border-0" data-bs-toggle="modal" data-bs-target="#modalTambahAlat">
           <i class="bi bi-plus-lg"></i>
           <span>Tambah Alat</span>
-        </a>
+        </button>
       </div>
     </div>
 
@@ -87,12 +87,12 @@ $nav_user_name = isset($_SESSION['nama_lengkap']) && !empty($_SESSION['nama_leng
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile" aria-labelledby="profile-dropdown">
           <li class="dropdown-header">Login sebagai <strong><?php echo $nav_user_name; ?></strong></li>
           <li><a class="dropdown-item" href="index.php"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-          <li><a class="dropdown-item" href="add.php"><i class="bi bi-plus-circle"></i> Tambah Data</a></li>
+          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAlat"><i class="bi bi-plus-circle"></i> Tambah Data</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
           <li>
-            <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar (logout)?');">
+            <a class="dropdown-item text-danger" href="logout.php" onclick="return confirmLogout('logout.php');">
               <i class="bi bi-box-arrow-right"></i> Keluar (Logout)
             </a>
           </li>

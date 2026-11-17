@@ -19,6 +19,7 @@ if (!isset($page_title)) {
   <link rel="stylesheet" href="assets/libs/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" href="assets/libs/apexcharts/apexcharts.css">
   <link rel="stylesheet" href="assets/libs/flatpickr/flatpickr.min.css">
+  <link rel="stylesheet" href="assets/libs/sweetalert2/sweetalert2.min.css">
 
   <!-- Main Spark Admin Design System & Custom Stylesheet -->
   <link rel="stylesheet" href="assets/css/main.css">

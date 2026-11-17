@@ -100,6 +100,7 @@ if (isset($_POST['register'])) {
   <!-- Local Libraries -->
   <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/libs/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/libs/sweetalert2/sweetalert2.min.css">
 
   <!-- Main Spark Admin Custom Stylesheet -->
   <link rel="stylesheet" href="assets/css/main.css">
@@ -235,8 +236,20 @@ if (isset($_POST['register'])) {
   </div>
   <!-- END: Authentication Container -->
 
-  <!-- Local Bootstrap bundle -->
+  <!-- Local Bootstrap bundle & SweetAlert2 -->
   <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/libs/sweetalert2/sweetalert2.all.min.js"></script>
+
+  <?php if (!empty($error_msg)): ?>
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Pendaftaran Gagal',
+      text: '<?php echo htmlspecialchars(addslashes($error_msg)); ?>',
+      confirmButtonColor: '#e11d48'
+    });
+  </script>
+  <?php endif; ?>
 
   <!-- Auto-generate username & password toggles -->
   <script>

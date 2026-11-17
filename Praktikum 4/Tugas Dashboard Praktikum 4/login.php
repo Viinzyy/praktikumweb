@@ -73,6 +73,7 @@ if (isset($_POST['login'])) {
   <!-- Local Libraries -->
   <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/libs/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/libs/sweetalert2/sweetalert2.min.css">
 
   <!-- Main Spark Admin Custom Stylesheet -->
   <link rel="stylesheet" href="assets/css/main.css">
@@ -184,8 +185,49 @@ if (isset($_POST['login'])) {
   </div>
   <!-- END: Authentication Container -->
 
-  <!-- Local Bootstrap bundle -->
+  <!-- Local Bootstrap bundle & SweetAlert2 -->
   <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/libs/sweetalert2/sweetalert2.all.min.js"></script>
+
+  <script>
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3500,
+      timerProgressBar: true
+    });
+
+    <?php if (!empty($error_msg)): ?>
+      Swal.fire({
+        icon: 'error',
+        title: 'Gagal Masuk',
+        text: '<?php echo htmlspecialchars(addslashes($error_msg)); ?>',
+        confirmButtonColor: '#e11d48'
+      });
+    <?php endif; ?>
+
+    <?php if ($msg === 'registered'): ?>
+      Swal.fire({
+        icon: 'success',
+        title: 'Pendaftaran Berhasil!',
+        text: 'Akun Anda telah aktif. Silakan masuk menggunakan Email/Username dan Password Anda.',
+        confirmButtonColor: '#10b981'
+      });
+    <?php elseif ($msg === 'logout'): ?>
+      Toast.fire({
+        icon: 'success',
+        title: 'Berhasil keluar (logout) dari sistem'
+      });
+    <?php elseif ($msg === 'unauthorized'): ?>
+      Swal.fire({
+        icon: 'warning',
+        title: 'Akses Ditolak',
+        text: 'Silakan login terlebih dahulu untuk mengakses dashboard.',
+        confirmButtonColor: '#f59e0b'
+      });
+    <?php endif; ?>
+  </script>
 
   <!-- Password toggle script -->
   <script>

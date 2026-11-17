@@ -63,14 +63,15 @@ include_once("includes/sidebar.php");
         <p class="page-subtitle">Sistem Informasi Manajemen & Inventaris Alat Elektromedis Rumah Sakit</p>
       </div>
       <div class="d-flex align-items-center gap-2">
-        <a href="add.php" class="btn-custom btn-custom-primary">
+        <!-- Tombol Pemicu Modal Pop-Up Tambah Alat -->
+        <button type="button" class="btn-custom btn-custom-primary" data-bs-toggle="modal" data-bs-target="#modalTambahAlat">
           <i class="bi bi-plus-lg"></i> Tambah Alat Baru
-        </a>
+        </button>
       </div>
     </div>
     <!-- END: Page Header Banner -->
 
-    <!-- ALERT NOTIFICATIONS -->
+    <!-- ALERT NOTIFICATIONS JIKA DATABASE GAGAL -->
     <?php if (!$db_connected): ?>
       <div class="alert-custom alert-custom-danger mb-4">
         <i class="bi bi-exclamation-triangle-fill alert-custom-icon"></i>
@@ -78,38 +79,6 @@ include_once("includes/sidebar.php");
           <strong>Koneksi Database Terputus:</strong> Tidak dapat terhubung ke database <code>simrs</code> di MySQL localhost.
           <br>Pastikan Apache & MySQL di <strong>XAMPP Control Panel</strong> sudah dijalankan (Start), dan database <code>simrs</code> sudah diimport dari file <code>database.sql</code>.
         </div>
-      </div>
-    <?php endif; ?>
-
-    <?php if ($msg === 'added'): ?>
-      <div class="alert-custom alert-custom-success mb-4">
-        <i class="bi bi-check-circle-fill alert-custom-icon"></i>
-        <div class="alert-custom-content">
-          <strong>Berhasil!</strong> Data alat elektromedis baru berhasil ditambahkan ke database.
-        </div>
-        <button class="alert-custom-close" type="button" aria-label="Close" onclick="this.parentElement.remove();">
-          <i class="bi bi-x-lg"></i>
-        </button>
-      </div>
-    <?php elseif ($msg === 'updated'): ?>
-      <div class="alert-custom alert-custom-primary mb-4">
-        <i class="bi bi-info-circle-fill alert-custom-icon"></i>
-        <div class="alert-custom-content">
-          <strong>Perubahan Tersimpan!</strong> Data alat elektromedis telah berhasil diperbarui.
-        </div>
-        <button class="alert-custom-close" type="button" aria-label="Close" onclick="this.parentElement.remove();">
-          <i class="bi bi-x-lg"></i>
-        </button>
-      </div>
-    <?php elseif ($msg === 'deleted'): ?>
-      <div class="alert-custom alert-custom-danger mb-4">
-        <i class="bi bi-trash-fill alert-custom-icon"></i>
-        <div class="alert-custom-content">
-          <strong>Data Dihapus!</strong> Satu rekaman alat elektromedis telah berhasil dihapus dari sistem.
-        </div>
-        <button class="alert-custom-close" type="button" aria-label="Close" onclick="this.parentElement.remove();">
-          <i class="bi bi-x-lg"></i>
-        </button>
       </div>
     <?php endif; ?>
 
@@ -208,9 +177,10 @@ include_once("includes/sidebar.php");
         </div>
         <!-- Actions -->
         <div class="d-flex align-items-center gap-2">
-          <a href="add.php" class="btn-custom btn-custom-primary">
+          <!-- Tombol Pemicu Modal Pop-Up Tambah Alat -->
+          <button type="button" class="btn-custom btn-custom-primary" data-bs-toggle="modal" data-bs-target="#modalTambahAlat">
             <i class="bi bi-plus-circle"></i> Tambah Alat
-          </a>
+          </button>
         </div>
       </div>
 
@@ -235,7 +205,9 @@ include_once("includes/sidebar.php");
                     <i class="bi bi-inbox fs-1 d-block mb-2 text-muted-green"></i>
                     <h5>Belum ada data alat</h5>
                     <p class="mb-3">Silakan tambahkan data alat pertama Anda melalui tombol di bawah.</p>
-                    <a href="add.php" class="btn-custom btn-custom-primary">Tambah Alat Baru</a>
+                    <button type="button" class="btn-custom btn-custom-primary" data-bs-toggle="modal" data-bs-target="#modalTambahAlat">
+                      Tambah Alat Baru
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -272,8 +244,10 @@ include_once("includes/sidebar.php");
                       <a href="edit.php?id=<?php echo $alat['id']; ?>" class="table-btn-action" title="Edit Alat">
                         <i class="bi bi-pencil-square"></i>
                       </a>
-                      <a href="delete.php?id=<?php echo $alat['id']; ?>" class="table-btn-action delete" title="Hapus Alat"
-                         onclick="return confirm('Apakah Anda yakin ingin menghapus data alat <?php echo htmlspecialchars(addslashes($alat['nama_alat'])); ?>?');">
+                      <!-- Tombol Hapus dengan Notifikasi SweetAlert2 Ramah -->
+                      <a href="javascript:void(0);" 
+                         onclick="return confirmDelete('delete.php?id=<?php echo $alat['id']; ?>', '<?php echo htmlspecialchars(addslashes($alat['nama_alat'])); ?>');"
+                         class="table-btn-action delete" title="Hapus Alat">
                         <i class="bi bi-trash"></i>
                       </a>
                     </div>
@@ -299,6 +273,135 @@ include_once("includes/sidebar.php");
     </div>
     <!-- END: Table Card Container -->
 
+    <!-- ==========================================
+         START: Jendela Pop-up Modal Tambah Alat
+         ========================================== -->
+    <div class="modal fade" id="modalTambahAlat" tabindex="-1" aria-labelledby="modalTambahAlatLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header bg-light border-0 py-3 px-4">
+            <div class="d-flex align-items-center gap-2">
+              <div class="stat-icon-wrapper bg-success text-white" style="width: 38px; height: 38px; font-size: 1.2rem; border-radius: 10px;">
+                <i class="bi bi-plus-lg"></i>
+              </div>
+              <div>
+                <h5 class="modal-title fw-bold text-dark mb-0" id="modalTambahAlatLabel">Tambah Alat Elektromedis Baru</h5>
+                <small class="text-muted">Lengkapi spesifikasi teknis dan ruangan penempatan alat</small>
+              </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+          </div>
+
+          <form action="add.php" method="POST" id="formModalTambah">
+            <div class="modal-body p-4">
+              <!-- Nama Alat -->
+              <div class="mb-3">
+                <label for="modal_nama_alat" class="form-label-custom fw-semibold">Nama Alat Elektromedis <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-heart-pulse"></i></span>
+                  <input type="text" class="form-control form-control-custom border-start-0" id="modal_nama_alat" name="nama_alat"
+                         placeholder="Contoh: Defibrillator HeartStart XL+, USG 4D Mindray" required autofocus>
+                </div>
+                <small class="text-muted">Masukkan tipe atau model lengkap alat elektromedis.</small>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <!-- Tahun Pengadaan -->
+                <div class="col-12 col-md-6">
+                  <label for="modal_tahun" class="form-label-custom fw-semibold">Tahun Pengadaan <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar3"></i></span>
+                    <input type="text" class="form-control form-control-custom border-start-0" id="modal_tahun" name="tahun"
+                           placeholder="Contoh: <?php echo date('Y'); ?>" maxlength="4" required value="<?php echo date('Y'); ?>">
+                  </div>
+                  <small class="text-muted">Tahun unit diterima / dibeli.</small>
+                </div>
+
+                <!-- Merek / Pabrikan -->
+                <div class="col-12 col-md-6">
+                  <label for="modal_merek" class="form-label-custom fw-semibold">Merek / Pabrikan <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-tag"></i></span>
+                    <input type="text" list="modalBrandList" class="form-control form-control-custom border-start-0" id="modal_merek" name="merek"
+                           placeholder="Contoh: Philips, Mindray, GE" required>
+                  </div>
+                  <datalist id="modalBrandList">
+                    <option value="Philips">
+                    <option value="GE Healthcare">
+                    <option value="Mindray">
+                    <option value="Siemens Healthineers">
+                    <option value="Draeger">
+                    <option value="Getinge">
+                    <option value="Medela">
+                    <option value="Nihon Kohden">
+                  </datalist>
+                  <small class="text-muted">Pilih atau ketik nama vendor/merek.</small>
+                </div>
+              </div>
+
+              <!-- Lokasi Penempatan -->
+              <div class="mb-2">
+                <label for="modal_lokasi" class="form-label-custom fw-semibold">Lokasi Penempatan / Ruangan <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-geo-alt"></i></span>
+                  <input type="text" list="modalRoomList" class="form-control form-control-custom border-start-0" id="modal_lokasi" name="lokasi"
+                         placeholder="Contoh: Ruang ICU, IGD, Instalasi Radiologi" required>
+                </div>
+                <datalist id="modalRoomList">
+                  <option value="Ruang ICU">
+                  <option value="Instalasi Gawat Darurat (IGD)">
+                  <option value="Kamar Bedah Sentral (OK)">
+                  <option value="Instalasi Radiologi">
+                  <option value="Poli Jantung">
+                  <option value="Poli Kandungan">
+                  <option value="Ruang Rawat Inap Melati">
+                  <option value="Ruang PICU/NICU">
+                  <option value="Laboratorium Klinik">
+                </datalist>
+                <small class="text-muted">Ruangan atau unit instalasi rumah sakit.</small>
+              </div>
+            </div>
+
+            <div class="modal-footer bg-light border-0 py-3 px-4 d-flex justify-content-end gap-2">
+              <button type="button" class="btn-custom btn-custom-outline-secondary" data-bs-dismiss="modal">
+                <i class="bi bi-x-lg"></i> Batal
+              </button>
+              <button type="submit" name="Submit" class="btn-custom btn-custom-primary">
+                <i class="bi bi-check-circle-fill"></i> Simpan Alat Baru
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- ==========================================
+         END: Jendela Pop-up Modal Tambah Alat
+         ========================================== -->
+
     <?php include_once("includes/footer.php"); ?>
   </div>
   <!-- END: Main Wrapper -->
+
+  <!-- SweetAlert2 Trigger untuk Flash Messages -->
+  <?php if (!empty($msg)): ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      <?php if ($msg === 'added'): ?>
+        Toast.fire({
+          icon: 'success',
+          title: 'Berhasil menambahkan data alat baru!'
+        });
+      <?php elseif ($msg === 'updated'): ?>
+        Toast.fire({
+          icon: 'success',
+          title: 'Data alat berhasil diperbarui!'
+        });
+      <?php elseif ($msg === 'deleted'): ?>
+        Toast.fire({
+          icon: 'info',
+          title: 'Satu data alat berhasil dihapus dari sistem.'
+        });
+      <?php endif; ?>
+    });
+  </script>
+  <?php endif; ?>

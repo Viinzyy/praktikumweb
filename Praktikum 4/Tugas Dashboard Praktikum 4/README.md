@@ -9,15 +9,14 @@ Aplikasi Web Inventaris & Manajemen **Data Alat Elektromedis** berbasis **PHP Na
 1. **Sistem Autentikasi Pengguna (Auth System):**
    - **Registrasi Akun:** Formulir pendaftaran pengguna baru (Nama Awal, Nama Akhir, Username, Email, Password, Konfirmasi Password) dengan hashing password aman **Bcrypt**.
    - **Login Pengguna:** Masuk ke sistem menggunakan Email atau Username beserta Password.
-   - **Logout Pengguna:** Menghapus seluruh sesi aman dengan konfirmasi keluar.
+   - **Logout Pengguna di Kiri Bawah:** Tombol logout khusus tepat di bawah profil admin pada sidebar dengan konfirmasi interaktif.
    - **Proteksi Halaman (Middleware):** Seluruh halaman dashboard dan CRUD tidak dapat diakses tanpa login terlebih dahulu.
    - **Akun Bawaan:** Tersedia akun admin default (`admin` / `admin123`).
 
-2. **Dashboard Modern (Spark Admin Theme):**
-   - Kartu statistik ringkasan data real-time:
-     - Total unit alat elektromedis.
-     - Jumlah pabrikan / merek vendor terdaftar.
-     - Jumlah sebaran ruangan / instalasi rumah sakit.
+2. **Dashboard Modern & Modal Pop-Up (Spark Admin Theme):**
+   - **Modal Pop-Up Tambah Alat:** Menambah alat baru langsung lewat jendela modal mengambang tanpa perlu meninggalkan dashboard.
+   - **SweetAlert2 Interaktif & Guest-Friendly:** Dialog konfirmasi hapus data, konfirmasi logout, serta toast notifikasi animasi yang ramah pengguna.
+   - **Kartu Statistik Real-Time:** Total unit alat elektromedis, merek vendor, dan sebaran ruangan.
    - Profil pengguna dinamis di sidebar dan topbar.
    - Status sistem aktif & tanggal otomatis.
 
